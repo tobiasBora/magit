@@ -1611,6 +1611,31 @@ is set in `magit-mode-setup'."
     map)
   "Keymap for `hunk' sections.")
 
+;; (define-key magit-hunk-section-map [mouse-3] magit-hunk-section-menu)
+;; (define-key magit-hunk-section-map [mouse-3] 'magit-mouse-menu)
+
+(easy-menu-define words-menu global-map
+  "Menu for word navigation commands."
+  '("Words"
+    ["Forward word" forward-word]
+    ["Backward word" backward-word]))
+
+
+(defun magit-mouse-menu (ev)
+  (interactive "@e")
+  (goto-char (posn-point (event-start ev)))
+  (let* ((map magit-hunk-section-menu)
+         (key (x-popup-menu t map))
+         (cmd (lookup-key map (vconcat key))))
+    (call-interactively cmd t)))
+
+(defvar magit-hunk-section-menu
+  (let ((map (make-sparse-keymap "Hunk Menu")))
+    (define-key map [m20] (list 'menu-item "Stage"   'magit-stage   :enable t))
+    (define-key map [m30] (list 'menu-item "Unstage" 'magit-unstage :enable nil))
+    map))
+(defalias 'magit-hunk-section-menu magit-hunk-section-menu)
+
 (defconst magit-diff-headline-re
   (concat "^\\(@@@?\\|diff\\|Submodule\\|"
           "\\* Unmerged path\\|merged\\|changed in both\\|"

@@ -435,6 +435,7 @@ starts complicating other things, then it will be removed."
     (define-key map (kbd "C-x 4 a") 'magit-add-change-log-entry-other-window)
     (define-key map (kbd "C-w")     'magit-copy-section-value)
     (define-key map (kbd "M-w")     'magit-copy-buffer-revision)
+    (define-key map [double-mouse-1] 'magit-visit-thing)
     (define-key map [remap evil-previous-line] 'evil-previous-visual-line)
     (define-key map [remap evil-next-line] 'evil-next-visual-line)
     map)
